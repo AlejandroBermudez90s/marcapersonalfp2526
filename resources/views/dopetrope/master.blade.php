@@ -25,12 +25,10 @@
                     <img src="{{ asset('images/mp-logo.png') }}" alt="Logo Marca Personal FP" width="200px" />
                 </a>
             </h1>
-
-            <h1 href="index.html">Dopetrope</h1>
-
             <!-- Nav -->
             <nav id="nav">
                 <ul>
+@section('menu')
                     <li class="current"><a href="index.html">Home</a></li>
                     <li>
                         <a href="#">Dropdown</a>
@@ -54,14 +52,14 @@
                     <li><a href="left-sidebar.html">Left Sidebar</a></li>
                     <li><a href="right-sidebar.html">Right Sidebar</a></li>
                     <li><a href="no-sidebar.html">No Sidebar</a></li>
+@show
                 </ul>
             </nav>
 
             <!-- Banner -->
             <section id="banner">
                 <header>
-                    <h2>Howdy. This is Dopetrope.</h2>
-                    <p>A responsive template by HTML5 UP</p>
+                    @yield('content')
                 </header>
             </section>
 
