@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProyectosController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'getHome']);
 
 // ----------------------------------------
 Route::get('login', function () {
@@ -14,26 +14,21 @@ Route::get('logout', function () {
     return "Logout usuario";
 });
 
-
 // ----------------------------------------
 Route::prefix('proyectos')->group(function () {
-    Route::get('/', function () {
-        return view('proyectos.index');
-    });
 
-    Route::get('create', function () {
-        return view('proyectos.create');
-    });
+    Route::get('/', [ProyectosController::class, 'getIndex']);
 
-    Route::get('/show/{id}', function ($id) {
-        return view('proyectos.show', array('id'=>$id));
-    }) -> where('id', '[0-9]+');
+    Route::get('create', [ProyectosController::class, 'getCreate']);
 
-    Route::get('/edit/{id}', function ($id) {
-        return view('proyectos.edit', array('id'=>$id));
-    }) -> where('id', '[0-9]+');
+    Route::get('show/{id}', [ProyectosController::class, 'getShow']) -> where('id', '[0-9]+');
+
+    Route::get('edit/{id}', [ProyectosController::class, 'getEdit']) -> where('id', '[0-9]+');
+
+    Route::post('store', [ProyectosController::class, 'store']);
+
+    Route::put('update/{id}', [ProyectosController::class, 'update']) -> where('id', '[0-9]+');
 });
-
 
 // ----------------------------------------
 Route::get('perfil/{id?}', function ($id = null) {
