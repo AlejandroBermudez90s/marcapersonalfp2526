@@ -47,4 +47,5 @@ Route::any('/{any}', function (ServerRequestInterface $request) {
     }
     return $response;
 
-})->where('any', '.*')->middleware(['auth:sanctum']);
+})->where('any', '.*');
+    //->middleware(['auth:sanctum']);
