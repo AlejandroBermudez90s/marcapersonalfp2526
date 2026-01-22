@@ -7,7 +7,7 @@ use Tqdev\PhpCrudApi\Api;
 use Tqdev\PhpCrudApi\Config\Config;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user()->curriculo->user;
 });
 
 
