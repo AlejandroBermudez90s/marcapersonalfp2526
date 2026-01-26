@@ -18,7 +18,10 @@ class FamiliaProfesionalResource extends JsonResource
         $familiaProfesional['ciclos'] = CicloResource::collection($this->ciclos);
         unset($familiaProfesional['created_at']);
         unset($familiaProfesional['updated_at']);
+<<<<<<< HEAD
 
+=======
+>>>>>>> b787e46d1b9ad8bc91201eecd04ed6260afc6094
         return $familiaProfesional;
     }
 }
