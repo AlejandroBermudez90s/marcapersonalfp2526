@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('curriculos', function (Blueprint $table) {
-            $table->id();
+        Schema::create('idiomas', function (Blueprint $table) {
+            $table->id()->autoIncrement();
+            $table->string('alpha2', 3);
+            $table->string('alpha3t', 3);
+            $table->string('alpha3b', 3);
+            $table->string('english_name', 60);
+            $table->string('native_name', 60);
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('curriculos');
+        Schema::dropIfExists('idiomas');
     }
 };
