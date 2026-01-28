@@ -27,7 +27,7 @@ Route::prefix('v1')->group(function () {
 
     Route::apiResource('idiomas', IdiomaController::class);
 
-    Route::apiResource('users/{user->id}/idiomas', UserIdiomaController::class);
+    Route::apiResource('users.idiomas', UserIdiomaController::class);
 });
 
 
