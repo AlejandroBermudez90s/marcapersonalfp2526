@@ -12,6 +12,8 @@ class IdiomasApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $seed = true;
+
     private function idiomaPayload(array $overrides = [])
     {
         return array_merge([
@@ -148,4 +150,5 @@ class IdiomasApiTest extends TestCase
             $this->assertFalse($idioma->users->contains('id', $user->id));
         }
     }
+
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\IdiomaResource;
+use App\Http\Resources\UserIdiomaResource;
 use App\Models\Idioma;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,62 +15,55 @@ class UserIdiomaController extends Controller
      */
     public function index(Request $request, User $user)
     {
-        $query = $user->idiomas();
-
-        if ($request) {
-            $query->where(function ($q) use ($request) {
-                $q->orWhere('english_name', 'like', '%' . $request->q . '%')
-                    ->orWhere('native_name', 'like', '%' . $request->q . '%');
-            });
-        }
-
-        return IdiomaResource::collection(
-            $query->orderBy($request->sort ?? 'id', $request->order ?? 'asc')
-                ->paginate($request->per_page)
-        );
+        return $user->idiomas()->get();
     }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, User $user)
     {
-        $idioma = json_decode($request->getContent(), true);
-        $idioma = $user->idiomas()->create($idioma);
+        $data=json_decode($request->getContent(),true);
 
-        return new IdiomaResource($idioma);
+        $user->idiomas()->attach($data);
+
+        return response()->json($user, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Idioma $idioma, User $user)
+    public function show(User $user, Idioma $idioma_id)
     {
-        return new IdiomaResource($idioma);
+        $idiomaUser = $user->idiomas()->indOrFail($idioma_id);
+
+        return new UserIdiomaResource($idiomaUser);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Idioma $idioma, User $user)
+    public function update(Request $request, User $user, Idioma $idioma_id)
     {
-        $idiomaData = json_decode($request->getContent(), true);
-        $idioma->update($idiomaData);
+        $dataIdiomaUser = json_decode($request->getContent(),true);
 
-        return new IdiomaResource($idioma);
+        $idiomaUser = $user->idiomas()->indOrFail($idioma_id);
+
+        $idiomaUser->update($dataIdiomaUser);
+
+        return new UserIdiomaResource($idiomaUser);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idioma $idioma, User $user)
+    public function destroy(User $user, Idioma $idioma_id)
     {
         try {
-            $idioma->delete();
+            $user->idiomas()->detach($idioma_id->id);
             return response()->json(null, 204);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage()
-            ], 400);
+            return response()->json(['error' => 'Could not delete the resource'], 500);
         }
     }
 }

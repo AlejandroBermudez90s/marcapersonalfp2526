@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_idiomas', function (Blueprint $table) {
+        Schema::create('idioma_user', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('user_id');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('idioma_id');
                 $table->foreign('idioma_id')->references('id')->on('idiomas')->onDelete('cascade');
 
-            $table->string('certificado');
+            //$table->string('certificado');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_idiomas');
+        Schema::dropIfExists('idioma_user');
     }
 };

@@ -53,6 +53,6 @@ class User extends Authenticatable
 
     public function idiomas()
     {
-        return $this->hasMany(UserIdioma::class);
+         return $this->belongsToMany(Idioma::class, 'idioma_user', 'user_id', 'idioma_id');
     }
 }

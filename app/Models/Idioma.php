@@ -18,8 +18,8 @@ class Idioma extends Model
         'native_name'
     ];
 
-    public function usersIdiomas()
+    public function users()
     {
-        return $this->hasMany(UserIdioma::class);
+        return $this->belongsToMany(User::class, 'idioma_user' , 'idioma_id', 'user_id');
     }
 }
